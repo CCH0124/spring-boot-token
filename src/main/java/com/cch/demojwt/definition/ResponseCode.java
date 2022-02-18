@@ -8,7 +8,9 @@ public enum ResponseCode {
     UNPROCESSABLE_ENTITY (422, "Unprocessable Entity"),
     ACCOUNT_IS_EXIST (423, "Account is exist"),
     ROLE_NOT_EXIST (424, "Role not exist"),
-    EMAIL_IS_EXIST (425, "Email is exist");
+    EMAIL_IS_EXIST (425, "Email is exist"),
+    TOKEN_REFRESH_FAIL (426, "Token refresh failed"),
+    TOKEN_REFRESH_NOT_FOUND (427, "Token refresh not found in database");
 
     private Integer code;
 

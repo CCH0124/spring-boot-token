@@ -20,4 +20,5 @@ public class JwtResponseVO {
     private String account;
     private String email;
     private List<String> roles;
+    private String refreshToken;
 }

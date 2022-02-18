@@ -4,8 +4,10 @@ import javax.validation.Valid;
 
 import com.cch.demojwt.request.VO.LoginRequestVO;
 import com.cch.demojwt.request.VO.SignupRequestVO;
+import com.cch.demojwt.request.VO.TokenRefreshRequest;
 import com.cch.demojwt.response.VO.JwtResponseVO;
 import com.cch.demojwt.response.VO.ResponseResult;
+import com.cch.demojwt.response.VO.TokenRefreshResponseVO;
 import com.cch.demojwt.service.AuthService;
 
 import org.springframework.http.MediaType;
@@ -33,5 +35,10 @@ public class AuthController {
     public ResponseEntity<ResponseResult<Void>> registerUser(@RequestBody @Valid SignupRequestVO signUpRequest) {
         authServiceImpl.signup(signUpRequest);
         return ResponseEntity.ok(ResponseResult.success());
+    }
+
+    @PostMapping(value = "/refreshtoken", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseResult<TokenRefreshResponseVO>> refreshToken(@RequestBody @Valid  TokenRefreshRequest request) {
+        return ResponseEntity.ok(ResponseResult.success(authServiceImpl.refreshToken(request)));
     }
 }
