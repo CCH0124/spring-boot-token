@@ -10,12 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "refreshtoken")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RefreshToken {
     @Id
     @Column(nullable = false, columnDefinition = "uuid DEFAULT uuid_generate_v4()")
