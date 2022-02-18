@@ -37,7 +37,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         // TODO Auto-generated method stub
 
         RefreshToken refreshToken = RefreshToken.builder()
-                .id(userRepository.findById(UUID.fromString(id)).get().getId())
+                .user(userRepository.findById(UUID.fromString(id)).get())
                 .expiryDate(Instant.now().plusMillis(refreshTokenDurationMs))
                 .token(UUID.randomUUID().toString().replace("-", ""))
                 .build();
