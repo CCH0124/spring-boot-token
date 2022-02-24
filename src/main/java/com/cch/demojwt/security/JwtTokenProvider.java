@@ -59,7 +59,7 @@ public class JwtTokenProvider {
 		Claims claims = Jwts.claims().setSubject(userPrincipal.getAccount());
 		claims.put("userName", userPrincipal.getUsername());
 		claims.put("email", userPrincipal.getEmail());
-		claims.put("auth", userPrincipal.getAuthorities().stream().map(r -> new SimpleGrantedAuthority(r.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+		claims.put("auth", userPrincipal.getAuthorities().stream().map(r -> new SimpleGrantedAuthority(r.getAuthority()).getAuthority()).filter(Objects::nonNull).collect(Collectors.toList()));
 		return Jwts.builder()
 				.setClaims(claims)
 				.setIssuedAt(new Date())

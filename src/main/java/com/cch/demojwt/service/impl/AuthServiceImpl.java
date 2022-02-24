@@ -1,5 +1,6 @@
 package com.cch.demojwt.service.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -115,10 +116,15 @@ public class AuthServiceImpl implements AuthService {
         String requestRefreshToken = request.getRefreshToken();
         return refreshTokenService.findByToken(requestRefreshToken)
                 .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = jwtUtils.doGenerateRefreshToken(Map.of("userName", user.getUsername(),"email", user.getEmail(), "auth", user.getRoles().stream().collect(Collectors.toList())),user.getUsername());
-                    return TokenRefreshResponseVO.builder().accessToken(token).refreshToken(requestRefreshToken).build();
+                .map(refreshToken -> {
+                    User user = refreshToken.getUser();
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("userName", user.getUsername());
+                    map.put("email", user.getEmail());
+                    map.put("auth", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+                    String token = jwtUtils.doGenerateRefreshToken(map, user.getUsername());
+                    return TokenRefreshResponseVO.builder().accessToken(token).refreshToken(requestRefreshToken)
+                            .build();
                 }).orElseThrow(() -> new CustomException(ResponseCode.TOKEN_REFRESH_NOT_FOUND));
     }
 
